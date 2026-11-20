@@ -1,11 +1,18 @@
 
+// Load environment variables from .env
+require("dotenv").config();
+
 const express = require("express");
+const cookieParser = require("cookie-parser");
 const authRoutes = require("./routes/auth");
 
 const app = express();
 
 // Allow the server to receive JSON data
 app.use(express.json());
+
+// Allow the server to read authentication cookies
+app.use(cookieParser());
 
 // Connect authentication routes
 app.use("/api/auth", authRoutes);
@@ -16,7 +23,7 @@ app.get("/", (req, res) => {
 });
 
 // Start server
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
